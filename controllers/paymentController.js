@@ -1,6 +1,7 @@
 const axios = require('axios');
 require('dotenv').config();
 
+//Porcesar pago
 exports.processPayment = async (req, res) => {
   const { token, amount, email } = req.body;
   if (!token || !amount || !email) {
@@ -34,7 +35,7 @@ exports.processPayment = async (req, res) => {
     res.status(statusCode).json({ message });
   }
 };
-
+//Renbolso de pago
 exports.refundPayment = async (req, res) => {
   const { chargeId, reason } = req.body;
   if (!chargeId) {
@@ -60,7 +61,7 @@ exports.refundPayment = async (req, res) => {
     res.status(500).json({ message: error.response.data.user_message });
   }
 };
-
+// Estado de pago
 exports.getPaymentStatus = async (req, res) => {
   const { chargeId } = req.params;
   if (!chargeId) {
