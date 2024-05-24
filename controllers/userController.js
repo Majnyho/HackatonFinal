@@ -34,7 +34,11 @@ exports.loginUser = async (req, res) => {
     if (!validPassword) return res.status(400).json({ message: 'Contraseña incorrecta' });
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ 
+      message: `Bienvenido ${user.username}`,
+      token: token
+
+       });
     
   } catch (err) {
     res.status(500).json({ message: err.message });

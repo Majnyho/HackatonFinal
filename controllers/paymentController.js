@@ -65,7 +65,7 @@ exports.refundPayment = async (req, res) => {
 exports.getPaymentStatus = async (req, res) => {
   const { chargeId } = req.params;
   if (!chargeId) {
-    return res.status(400).json({ message: 'El ID del cargo es obligatorio' });
+    return res.status(400).json({ message: 'El ID  cargo  obligatorio' });
   }
 
   try {
