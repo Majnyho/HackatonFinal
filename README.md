@@ -127,3 +127,60 @@ Crea una nueva rama (git checkout -b feature/nueva-funcionalidad).
 Realiza tus cambios (git commit -m 'Añadir nueva funcionalidad').
 Empuja tu rama (git push origin feature/nueva-funcionalidad).
 Abre un Pull Request.
+
+## Recursos
+
+### Colección de Postman
+
+Hemos incluido una colección de Postman para facilitar la prueba de los endpoints de nuestra API.
+
+#### Importar la Colección en Postman
+
+1. Abre Postman.
+2. Haz clic en **Import** en la parte superior izquierda.
+3. Selecciona el archivo `HackathonFinal.postman_collection.json` que se encuentra en la carpeta `resources` de este repositorio.
+4. La colección aparecerá en tu lista de colecciones y podrás utilizarla para probar los diferentes endpoints de la API.
+
+### Endpoints Disponibles
+
+- **Registro de Usuario**
+  - **Método**: POST
+  - **URL**: `/api/users/register`
+  - **Cuerpo**:
+    ```json
+    {
+      "username": "testuser",
+      "password": "password123"
+    }
+    ```
+
+- **Inicio de Sesión**
+  - **Método**: POST
+  - **URL**: `/api/users/login`
+  - **Cuerpo**:
+    ```json
+    {
+      "username": "testuser",
+      "password": "password123"
+    }
+    ```
+
+- **Obtener Productos**
+  - **Método**: GET
+  - **URL**: `/api/products`
+
+- **Crear Producto**
+  - **Método**: POST
+  - **URL**: `/api/products`
+  - **Cuerpo**:
+    ```json
+    {
+      "name": "Producto",
+      "description": "Descripción",
+      "price": 1000,
+      "category": "Categoría",
+      "stock": 10
+    }
+    ```
+
+- **Más Endpoints**: Detalles de otros endpoints disponibles en la API.
