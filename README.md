@@ -55,8 +55,8 @@ Productos
 Obtener Todos los Productos
 
 Ruta: GET /api/products
-Crear un Nuevo Producto
 
+Crear un Nuevo Producto
 Ruta: POST /api/products
 Cuerpo: { "name": "Producto", "description": "Descripción", "price": 1000, "category": "Categoría", "stock": 10 }
 
@@ -91,6 +91,7 @@ Cuerpo: { "chargeId": "chr_test_123456789", "reason": "Solicitud del cliente" }
 
 Verificar Estado de Pago
 Ruta: GET /api/payments/status/:chargeId
+
 Órdenes
 
 Crear una Nueva Orden

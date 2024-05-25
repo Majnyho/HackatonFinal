@@ -1,26 +1,29 @@
-// Importa el módulo axios para realizar solicitudes HTTP
 const axios = require('axios');
-
-// Carga las variables de entorno desde un archivo .env en el entorno de Node.js
+const Order = require('../models/Order');
 require('dotenv').config();
 
 // Procesar pago
 exports.processPayment = async (req, res) => {
-  // Extrae el token, el monto y el correo electrónico del cuerpo de la solicitud
-  const { token, amount, email } = req.body;
+  const { orderId, token, amount, email } = req.body;
 
-  // Valida que todos los campos requeridos estén presentes
-  if (!token || !amount || !email) {
+  // Validar campos necesarios
+  if (!orderId || !token || !amount || !email) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
-  // Valida que el monto sea mayor que cero
+  // Validar que el monto sea mayor que cero
   if (amount <= 0) {
     return res.status(400).json({ message: 'El monto debe ser mayor que cero' });
   }
 
   try {
-    // Realiza una solicitud POST a la API de Culqi para crear un cargo
+    // Buscar la orden en la base de datos
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: 'Orden no encontrada' });
+    }
+
+    // Realizar una solicitud POST a la API de Culqi para crear un cargo
     const response = await axios.post(
       'https://api.culqi.com/v2/charges',
       {
@@ -36,17 +39,24 @@ exports.processPayment = async (req, res) => {
         }
       }
     );
-    // Responde con los datos de la respuesta de Culqi en formato JSON
-    res.json(response.data);
+
+    // Actualizar el estado de la orden a 'Pagado' y guardar
+    order.status = 'Pagado';
+    await order.save();
+
+    // Responder con los datos del cargo y la orden actualizada
+    res.json({ charge: response.data, order });
   } catch (error) {
-    // Maneja los errores y responde con el mensaje de error adecuado
-    const statusCode = error.response ? error.response.status : 500;
-    const message = error.response ? error.response.data.user_message : 'Error interno del servidor';
-    res.status(statusCode).json({ message });
+    if (error.response) {
+      res.status(error.response.status).json({ message: error.response.data.user_message });
+    } else if (error.request) {
+      res.status(500).json({ message: 'No response received from Culqi' });
+    } else {
+      res.status(500).json({ message: error.message });
+    }
   }
 };
-
-// Reembolso de pago
+// Función para reembolsar un pago
 exports.refundPayment = async (req, res) => {
   // Extrae el ID del pago y la razón del cuerpo de la solicitud
   const { chargeId, reason } = req.body;
@@ -79,7 +89,7 @@ exports.refundPayment = async (req, res) => {
   }
 };
 
-// Estado de pago
+// Función para obtener el estado de un pago
 exports.getPaymentStatus = async (req, res) => {
   // Extrae el ID del pago de los parámetros de la solicitud
   const { chargeId } = req.params;
