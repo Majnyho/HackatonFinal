@@ -47,8 +47,8 @@ Actualizar Información del Usuario
 Ruta: PUT /api/users/profile
 Encabezados: Authorization: Bearer <token>
 Cuerpo: { "username": "nuevoNombre", "password": "nuevaContrasena" }
-Eliminar Usuario
 
+Eliminar Usuario
 Ruta: DELETE /api/users/profile
 Encabezados: Authorization: Bearer <token>
 Productos
@@ -59,62 +59,63 @@ Crear un Nuevo Producto
 
 Ruta: POST /api/products
 Cuerpo: { "name": "Producto", "description": "Descripción", "price": 1000, "category": "Categoría", "stock": 10 }
+
 Obtener un Producto por ID
-
 Ruta: GET /api/products/:id
-Actualizar un Producto
 
+Actualizar un Producto
 Ruta: PUT /api/products/:id
 Cuerpo: { "name": "Nuevo Nombre", "description": "Nueva Descripción", "price": 1500, "category": "Nueva Categoría", "stock": 20 }
+
 Eliminar un Producto
-
 Ruta: DELETE /api/products/:id
+
 Filtrar Productos por Stock
-
 Ruta: GET /api/products/filter/stock?inStock=true
+
 Filtrar Productos por Categoría
-
 Ruta: GET /api/products/filter/category?category=Categoría
+
 Buscar Productos por Inicial
-
 Ruta: GET /api/products/search/initial?initial=A
-Pagos
-Procesar Pago
 
+Pagos
+
+Procesar Pago
 Ruta: POST /api/payments/pay
 Cuerpo: { "token": "tok_test_visa_123456789", "amount": 1000, "email": "cliente@example.com" }
-Reembolsar Pago
 
+Reembolsar Pago
 Ruta: POST /api/payments/refund
 Cuerpo: { "chargeId": "chr_test_123456789", "reason": "Solicitud del cliente" }
-Verificar Estado de Pago
 
+Verificar Estado de Pago
 Ruta: GET /api/payments/status/:chargeId
 Órdenes
-Crear una Nueva Orden
 
+Crear una Nueva Orden
 Ruta: POST /api/orders
 Encabezados: Authorization: Bearer <token>
 Cuerpo: { "userId": "60c72b2f9b1e8c1a50f8b8b5", "products": [{ "product": "60c72b2f9b1e8c1a50f8b8b6", "quantity": 2 }], "totalAmount": 3000, "status": "Pendiente" }
-Obtener las Órdenes del Usuario
 
+Obtener las Órdenes del Usuario
 Ruta: GET /api/orders
 Encabezados: Authorization: Bearer <token>
-Obtener una Orden por ID
 
+Obtener una Orden por ID
 Ruta: GET /api/orders/:id
 Encabezados: Authorization: Bearer <token>
-Actualizar el Estado de una Orden
 
+Actualizar el Estado de una Orden
 Ruta: PUT /api/orders/:id/status
 Encabezados: Authorization: Bearer <token>
 Cuerpo: { "status": "Enviado" }
-Eliminar una Orden
 
+Eliminar una Orden
 Ruta: DELETE /api/orders/:id
 Encabezados: Authorization: Bearer <token>
-Obtener Todas las Órdenes (Administrador)
 
+Obtener Todas las Órdenes (Administrador)
 Ruta: GET /api/orders/all
 Encabezados: Authorization: Bearer <token>
 
